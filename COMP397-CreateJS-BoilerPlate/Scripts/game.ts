@@ -19,7 +19,7 @@ var manifest = [
     { id: "4", src: "assets/images/four.png" },
     { id: "5", src: "assets/images/five.png" },
     { id: "6", src: "assets/images/six.png" },
-    { id: "pinkButton", src: "assets/images/roll.png" },
+    { id: "rollButton", src: "assets/images/roll.png" },
     { id: "clicked", src: "assets/audio/clicked.wav" }
 ];
 
@@ -28,7 +28,7 @@ var manifest = [
 var diceLabel1: createjs.Text; // create a reference
 var diceLabel2: createjs.Text; // create a reference
 var sum: createjs.Text; // create a reference
-//var pinkButton: createjs.Bitmap;
+//var rollButton: createjs.Bitmap;
 var dice1: objects.Button;
 var dice2: objects.Button;
 var rollButton: objects.Button;
@@ -85,19 +85,19 @@ function rollButtonClicked(event: createjs.MouseEvent) {
 
     createjs.Sound.play("clicked");
 
-    var rand1 = Math.round(Math.random() * 6);
-    var rand2 = Math.round(Math.random() * 6);
+    var rand1 = Math.floor((Math.random() * 6)+1);
+    var rand2 = Math.floor((Math.random() * 6) + 1);
+    var total = rand1 + rand2;
 
     //diceLabel1.text  = rand1.toString();
     //diceLabel2.textBaseline  = rand2.toString();
 
     stage.removeAllChildren();
 
-    //this.swapImage(1, rand1);
-    //this.swapImage(2, rand2);
+    swapImage(1, rand1);
+    swapImage(2, rand2);
 
-    var total = rand1 + rand2;
-
+    /*
     var bmp = new objects.Button(assets.getResult(rand1.toString()), 100, 150);
     diceLabel1 = new createjs.Text(rand1.toString(), "40px Consolas", "#000000");
     diceLabel1.regX = diceLabel1.getMeasuredWidth() * 0.5;
@@ -117,7 +117,8 @@ function rollButtonClicked(event: createjs.MouseEvent) {
 
     stage.addChild(diceLabel2);
     stage.addChild(bmp2);
-    
+    */
+
     sum = new createjs.Text("sum: " + total.toString(), "40px Consolas", "#000000");
     sum.regX = sum.getMeasuredWidth() * 0.5;
     sum.regY = sum.getMeasuredHeight() * 0.5;
@@ -125,16 +126,15 @@ function rollButtonClicked(event: createjs.MouseEvent) {
     sum.y = 260;
     stage.addChild(sum);
 
-    rollButton = new objects.Button(assets.getResult("pinkButton"), 160, 350);
+    rollButton = new objects.Button(assets.getResult("rollButton"), 160, 350);
     stage.addChild(rollButton);
     rollButton.on("click", rollButtonClicked);
 
 }
 
-function swapImage(dice: number, num: number) {
-    alert(num.toString());
-    
-    
+function swapImage(dice:number, num:number) {
+    //alert(num.toString());
+        
     if (dice == 1) {
         var bmp = new objects.Button(assets.getResult(num.toString()), 100, 150);
         diceLabel1 = new createjs.Text(num.toString(), "40px Consolas", "#000000");
@@ -166,14 +166,14 @@ function swapImage(dice: number, num: number) {
 // Mouseover event
 /*
 function pinkButtonOver() {
-    pinkButton.alpha = 0.8;
+    rollButton.alpha = 0.8;
 }
 */
 
 // Mouseout event
 /*
 function pinkButtonOut() {
-    pinkButton.alpha = 1.0;
+    rollButton.alpha = 1.0;
 }
 */
 
@@ -207,7 +207,7 @@ function main() {
     dice2 = new objects.Button(assets.getResult("1"), 200, 150);
     stage.addChild(dice2);
 
-    rollButton = new objects.Button(assets.getResult("pinkButton"), 160, 350);
+    rollButton = new objects.Button(assets.getResult("rollButton"), 160, 350);
     stage.addChild(rollButton);
     rollButton.on("click", rollButtonClicked);
 }
